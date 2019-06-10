@@ -1,0 +1,149 @@
+<html>
+
+<link rel="stylesheet" type="text/css" href="userQuery.css">
+<head>
+<title>系统管理模块</title>
+<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+    <script language="javascript" type="text/javascript" src="userQuery.js"></script>
+    <div class="container">
+        <div class="left">
+            <div class="left-top">
+                <div class="system_name">
+                    <img src="./img/left/manage.png" >
+                    <p>管理系统</p>
+                </div>
+                <div class="btn">
+                    <div class="btn-single" id="btn_1"  onclick="onUserQuery()">
+                        <p>用户查询</p>
+                    </div>
+                    <div class="btn-single" id="btn_2" onclick="onArbitrateManagment()">
+                         <p>仲裁管理</p>
+                    </div>
+                </div>
+            </div>
+            <div class="left-bottom">
+                <div class="manager_type">
+                    <img src="./img/left/manager.png">
+                    <p>姓名</p>
+                </div>
+                <div class="weather">
+                    <img src="./img/left/weather.png">
+                    <div class="weather-info">
+                        <p id="weather-time"></p>
+                        <p id="weather-temperature">26℃</p>
+                        <p id="weather-city">HangZhou</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="main">
+            <div class="search" id="search_pad">
+                <div class="search-top">
+                    <img src="./img/search/search.png">
+                    <p>用户查询</p>
+                </div>
+                <div class="search-main">
+                    <div class="condition">
+                        <p>用户名</p>
+                        <input type="text" id="search_nickname">
+                    </div>
+                    <div class="condition">
+                        <p>编号</p>
+                        <input type="text" id="search_number">
+                    </div>
+                    <div class="condition">
+                        <p>类别</p>
+                        <input type="text" id="search_type">
+                    </div>
+                    <div class="condition">
+                        <p>姓名</p>
+                        <input type="text" id="search_name">
+                    </div>
+                </div>
+                <div class="search-btn">
+                    <img src="./img/search/confirm.png" onclick="onSearchUserinfo()">
+                </div>
+            </div>
+            <div class="search_result" id="search_result_pad">
+                <div class="search_result-top">
+                    <div class="search_result-top-left">
+                        <img src="./img/search_result/list.png" >
+                        <p>用户列表</p>
+                    </div>
+                    <div class="search_result-top-right">
+                        <img src="./img/search_result/back.png" onclick="onSearch_resultBack()">
+                    </div>
+                </div>
+                <div class="search_result-main">
+                    <div class="search_result-main-top">
+                        <p>用户名</p>
+                        <p>编号</p>
+                        <p>类别</p>
+                        <p>姓名</p>
+                    </div>
+                    <div id="record" >
+                        <div class="single_record" v-for="(item,index) in items" v-on:mouseenter="selectActive(index,$event)" v-on:mouseleave="removeActive(index,$event)" v-on:click="record_click(index,$event)">
+                            <div class="record_nickname">
+                                <p>{{item.nickname}}</p>
+                            </div>
+                            <div class="record_number">
+                                <p>{{item.number}}</p>
+                            </div>
+                            <div class="record_type">
+                                <p>{{item.type}}</p>
+                            </div>
+                            <div class="record_name">
+                                <p>{{item.name}}</p>
+                            </div>
+                            <div class="single_record_btn" v-if="item.show"  id="item.index">
+                                <div class="record_btn" id="record_change">
+                                    <p>修改</p>
+                                </div>
+                                <div class="record_btn" id="record_blacklist">
+                                    <p>黑名单</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    <!--以下为complain模块-->
+                     <div class="complain_page"id="complain_page_id">
+                            <div class="complain_content">
+                                <div class="complain_top">  
+                                    <p>&nbsp;&nbsp;用户名称&nbsp;</p>
+                                    <p>&nbsp;&nbsp;用户ID&nbsp;</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户投诉&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                    <p>投诉处理</p>
+                                </div>   
+                                <div id="complain" >
+                                    <div class="complain_record" v-for="(item,index) in items" v-on:mouseenter="selectActive(index,$event)" v-on:mouseleave="removeActive(index,$event)" v-on:click="complain_click(index,$event)">
+                                        <div class="complain_nickname">
+                                             <p>{{item.nickname}}</p>
+                                        </div>
+                                        <div class="complain_ID">
+                                            <p>{{item.ID}}</p>
+                                        </div>
+                                        <div class="complain_text">
+                                            <p>{{item.text}}</p>
+                                        </div>
+            
+                                        <div class="complain_record_btn" v-if="item.show"  id="item.index">
+                                            <div class="record_btn" id="record_change">
+                                                <p>通过</p>
+                                            </div>
+                                            <div class="record_btn" id="record_blacklist">
+                                                <p>驳回</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+        </div>
+    </div>
+</body>
+</html>
