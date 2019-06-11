@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+<title>3</title>
+</head>
+<body>
+<button id="load" onclick="window.location.reload('superManger.html')">跳转</button> 
+<div align="center">
+<form action="" name="myform">
+<table>
+<tr>
+<td>用户名：</td>
+<td><input type="text" id="user" /></td>
+</tr>
+<tr>
+<td>密  码：</td>
+<td><input type="text" id="password" /></td>
+</tr>
+<tr>
+<td>验证码：</td>
+<td align="left"><input type="text" size="5" id="code" /></td>
+</tr>
+</table>
+</form>
+<table>
+<tr>
+<td>
+<input type="submit" value="提交" onclick=myfun_submit() />
+</td>
+<td>
+<input type="submit" value="重置" onclick=myfun_reset() />
+</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript">
+function myfun_submit(){
+
+window.location.href='superManger.html';
+var user_val = document.getElementById("user").value;
+var password_val = document.getElementById("password").value;
+/*if(user_val==""){
+alert("用户名不能为空！！");
+}else if(password_val==""){
+alert("密码不能为空！！！");
+}*/
+}
+function myfun_reset(){
+document.getElementById("user").value = "";
+document.getElementById("password").value = "";
+document.getElementById("code").value = "";
+}
+</script>
+</body>
+</html>

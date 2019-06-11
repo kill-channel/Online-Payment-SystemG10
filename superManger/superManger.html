@@ -1,0 +1,196 @@
+<html>
+
+<link rel="stylesheet" type="text/css" href="superManger.css">
+<head>
+<title>系统管理模块</title>
+<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+    <script language="javascript" type="text/javascript" src="superManger.js"></script>
+    <a href="1.htm" onclick="openwin()">open</a>
+    <div class="container">
+        <div class="left">
+            <div class="left-top">
+                <div class="system_name">
+                    <img src="./img/left/manage.png" >
+                    <p>管理系统</p>
+                </div>
+                <div class="btn">
+                    <div class="btn-single" id="btn_1"  onclick="onMangerQuery()">
+                        <p>管理员查询</p>
+                    </div>
+                </div>
+                <div class="btn">
+                    <div class="btn-single" id="btn_2" onclick="addManger()">
+                        <p>添加管理员</p>
+                    </div>
+                </div>
+                <div class="btn">
+                    <div class="btn-single" id="btn_3" onclick="log()">
+                        <p>日志查询</p>
+                    </div>
+                </div>
+            </div>
+            <div class="left-bottom">
+                <div class="manager_type">
+                    <img src="./img/left/manager.png">
+                    <p>姓名</p>
+                </div>
+                <div class="weather">
+                    <img src="./img/left/weather.png">
+                    <div class="weather-info">
+                        <p id="weather-time"></p>
+                        <p id="weather-temperature">26℃</p>
+                        <p id="weather-city">HangZhou</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main">
+            <div class="search" id="search_pad">
+                <div class="search-top">
+                    <img src="./img/search/search.png">
+                    <p>管理员查询</p>
+                </div>
+                <div class="search-main">
+                    <div class="condition">
+                        <p>用户名</p>
+                        <input type="text" id="search_nickname">
+                    </div>
+                    <div class="condition">
+                        <p>编号</p>
+                        <input type="text" id="search_number">
+                    </div>
+                </div>
+                <div class="confirm-btn">
+                    <img src="./img/search/confirm.png" onclick="onSearchMangerinfo()">
+                    <img src="./img/back.jpg" onclick="back()">
+                </div>
+            </div>
+            <div class="search_result" id="search_result_pad">
+                <div class="search_result-top">
+                    <div class="search_result-top-left">
+                        <img src="./img/search_result/list.png" >
+                        <p>管理员列表</p>
+                    </div>
+                    <div class="search_result-top-right">
+                        <img src="./img/search_result/back.png" onclick="back()">
+                    </div>
+                </div>
+                <div class="search_result-main">
+                    <div class="search_result-main-top">
+                        <p>用户名</p>
+                        <p>编号</p>
+                        <p>类别</p>
+                    </div>
+                    <div id="record" >
+                        <div class="single_record" v-for="(item,index) in items" v-on:mouseenter="selectActive(index,$event)" v-on:mouseleave="removeActive(index,$event)" v-on:click="record_click(index,$event)">
+                            <div class="record_item">
+                                <p>{{item.nickname}}</p>
+                            </div>
+                            <div class="record_item">
+                                <p>{{item.number}}</p>
+                            </div>
+                            <div class="record_item">
+                                <p>{{item.type}}</p>
+                            </div>
+                            <div class="single_record_btn" v-if="item.show"  id="item.index">
+                                <div class="record_btn" id="record_change" onclick="modify()">
+                                    <p>修改</p>
+                                </div>
+                                <div class="record_btn" id="record_delete">
+                                    <p>删除</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="add_manger" id="add_pad">
+                <div class="add-top">
+                    <img src="./img/add/add.jpg">
+                    <p>添加管理员</p>
+                </div>
+                <div class="add-main">
+                    <div class="condition">
+                        <p>用户名</p>
+                        <input type="text" id="add_nickname">
+                    </div>
+                    <div class="condition">
+                        <p>类别</p>
+                        <input type="text" id="add_type">
+                    </div>
+                    <div class="condition">
+                        <p>密码</p>
+                        <input type="text" id="add_password">
+                    </div>
+                </div>
+                <div class="confirm-btn">
+                    <img src="./img/search/confirm.png">
+                    <img src="./img/back.jpg" onclick="back()">
+                </div>
+            </div>
+            <div class="log_result" id="log_pad">
+                <div class="log_result-top">
+                    <div class="log_result-top-left">
+                        <img src="./img/search_result/list.png" >
+                        <p>日志列表</p>
+                    </div>
+                    <div class="log_result-top-right">
+                        <img src="./img/search_result/back.png" onclick="back()">
+                    </div>
+                </div>
+                <div class="log_result-main">
+                    <div class="log_result-main-top">
+                        <p>操作时间</p>
+                        <p>日志类型</p>
+                        <p>操作者</p>
+                        <p>被操作者</p>
+                    </div>
+                    <div id="record1" >
+                        <div class="single_record1" v-for="(item,index) in items" v-on:mouseenter="selectActive(index,$event)" v-on:mouseleave="removeActive(index,$event)" v-on:click="record1_click(index,$event)">
+                            <div class="record_item">
+                                <p>{{item.L_time}}</p>
+                            </div>
+                            <div class="record_item">
+                                <p>{{item.L_type}}</p>
+                            </div>
+                            <div class="record_item">
+                                <p>{{item.L_m_id}}</p>
+                            </div>
+                            <div class="record_item">
+                                <p>{{item.L_u_id}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modify" id="modify_pad">
+                <div class="modify-top">
+                    <img src="./img/search/search.png">
+                    <p>管理员修改</p>
+                </div>
+                <div class="modify-main">
+                    <div class="condition">
+                        <p>用户名</p>
+                        <input type="text" id="modify_nickname">
+                    </div>
+                    <div class="condition">
+                        <p>编号</p>
+                        <input type="text" id="modify_number">
+                    </div>
+                    <div class="condition">
+                        <p>密码</p>
+                        <input type="text" id="modify_password">
+                    </div>
+                </div>
+                <div class="confirm-btn">
+                    <img src="./img/search/confirm.png">
+                    <img src="./img/back.jpg" onclick="back()">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
