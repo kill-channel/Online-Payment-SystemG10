@@ -1,0 +1,188 @@
+<html>
+
+<link rel="stylesheet" type="text/css" href="userQuery.css">
+<head>
+<title>系统管理模块</title>
+<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+    <script language="javascript" type="text/javascript" src="userQuery.js"></script>
+    <div class="container">
+        <div class="left">
+            <div class="left-top">
+                <div class="system_name">
+                    <img src="./img/left/manage.png" >
+                    <p>管理系统</p>
+                </div>
+                <div class="btn">
+                    <div class="btn-single" id="btn_1"  onclick="onUserQuery()">
+                        <p>用户查询</p>
+                    </div>
+                    <div class="btn-single" id="btn_2" onclick="onArbitrateManagment()">
+                         <p>仲裁管理</p>
+                    </div>
+                </div>
+            </div>
+            <div class="left-bottom">
+                <div class="manager_type">
+                    <img src="./img/left/manager.png">
+                    <p>姓名</p>
+                </div>
+                <div class="weather">
+                    <img src="./img/left/weather.png">
+                    <div class="weather-info">
+                        <p id="weather-time"></p>
+                        <p id="weather-temperature">26℃</p>
+                        <p id="weather-city">HangZhou</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="main">
+            <div class="search" id="search_pad">
+                <div class="search-top">
+                    <img src="./img/search/search.png">
+                    <p>用户查询</p>
+                </div>
+                <div class="search-main">
+                    <div class="condition">
+                        <p>用户名</p>
+                        <input type="text" id="search_nickname">
+                    </div>
+                    <div class="condition">
+                        <p>编号</p>
+                        <input type="text" id="search_number">
+                    </div>
+                    <div class="condition">
+                        <p>类别</p>
+                        <input type="text" id="search_type">
+                    </div>
+                    <div class="condition">
+                        <p>姓名</p>
+                        <input type="text" id="search_name">
+                    </div>
+                </div>
+                <div class="search-btn">
+                    <img src="./img/search/confirm.png" onclick="onSearchUserinfo()">
+                </div>
+            </div>
+            <div class="search_result" id="search_result_pad">
+                <div class="search_result-top">
+                    <div class="search_result-top-left">
+                        <img src="./img/search_result/list.png" >
+                        <p>用户列表</p>
+                    </div>
+                    <div class="search_result-top-right">
+                        <img src="./img/search_result/back.png" onclick="onSearch_resultBack()">
+                    </div>
+                </div>
+                <div class="search_result-main">
+                    <div class="search_result-main-top">
+                        <p>用户名</p>
+                        <p>编号</p>
+                        <p>类别</p>
+                        <p>姓名</p>
+                    </div>
+                    <div id="record" >
+                        <div class="single_record" v-for="(item,index) in records" v-on:mouseenter="selectActive(index,$event)" v-on:mouseleave="removeActive(index,$event)" v-on:click="record_click(index,$event)">
+                            <div class="record_nickname">
+                                <p>{{item.nickname}}</p>
+                            </div>
+                            <div class="record_number">
+                                <p>{{item.number}}</p>
+                            </div>
+                            <div class="record_type">
+                                <p>{{item.type}}</p>
+                            </div>
+                            <div class="record_name">
+                                <p>{{item.name}}</p>
+                            </div>
+                            <div class="single_record_btn" v-if="item.show"  id="item.index">
+                                <div class="record_btn" id="record_change" v-on:click="record_change(index)">
+                                    <p>修改</p>
+                                </div>
+                                <div class="record_btn" id="record_blacklist">
+                                    <p>黑名单</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="search_result" id="arbitrate_pad">
+                <div class="search_result-top">
+                    <div class="search_result-top-left">
+                        <img src="./img/arbitrate/arbitrate.png" >
+                        <p>仲裁列表</p>
+                    </div>
+                    <div class="search_result-top-right">
+                        <img src="./img/arbitrate/renew.png" onclick="onArbitrateRenew()">
+                    </div>
+                </div>
+                <div class="search_result-main">
+                    <div class="search_result-main-top">
+                        <p>投诉者</p>
+                        <p>被投诉</p>
+                        <p>投诉细节</p>
+                    </div>
+                    <div id="arbitrate_record" >
+                        <div class="single_record" v-for="(item,index) in records" v-on:mouseenter="selectActive(index,$event)" v-on:mouseleave="removeActive(index,$event)" v-on:click="record_click(index,$event)">
+                            <div class="arbitrate_name">
+                                <p>{{item.name}}</p>
+                            </div>
+                            <div class="arbitrate_shop">
+                                <p>{{item.shop}}</p>
+                            </div>
+                            <div class="arbitrate_detail" id="arbitrate_detail" ref="child">
+                                <p>{{item.detail}}</p>
+                            </div>
+                            <div class="single_record_btn" v-if="item.show"  id="item.index">
+                                <div class="record_btn" id="record_change">
+                                    <p>通过</p>
+                                </div>
+                                <div class="record_btn" id="record_blacklist">
+                                    <p>驳回</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" id="black_pad" v-if="onChange">
+        <div class="left" id="black_pad-left"></div>
+        <div class="main" id="black_pad-main">
+            <div class="search" id="change_pad">
+                <div class="search-top">
+                    <img src="./img/change/change.png">
+                    <p>用户修改</p>
+                </div>
+                <div class="search-main">
+                     <div class="condition">
+                         <p>编号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p  id= "change_number"></p>
+                    </div>
+                    <div class="condition">
+                        <p>用户名</p>
+                        <input type="text" id="change_nickname">
+                    </div>
+                    <div class="condition">
+                        <p>类别</p>
+                        <input type="text" id="change_type">
+                    </div>
+                    <div class="condition">
+                        <p>姓名</p>
+                        <input type="text" id="change_name">
+                    </div>
+                </div>
+                <div class="search-btn">
+                    <img src="./img/search/confirm.png" onclick="onChangeYes()">
+                    <img src="./img/change/cancel.png" onclick="onChangeNo()">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
